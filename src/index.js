@@ -1,2 +1,1 @@
-// TODO: Render the `App` component to the DOM
-console.log('bbbbbbb')
+ReactDOM.render(<App/>, $('#app')[0]);
