@@ -8,7 +8,7 @@ class App extends React.Component {
     this.setState({query : query});
     
     searchYouTube({
-      query: query,
+      q: query,
       max: 8,
       key: window.YOUTUBE_API_KEY,
       videoEmbeddable: 'true',
