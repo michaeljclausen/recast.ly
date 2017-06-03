@@ -1,23 +1,37 @@
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {video: window.exampleVideoData[0]};
+    this.state = {video: window.exampleVideoData[0], videos: window.exampleVideoData };
   }
   
+  handleSearchClick(query) {
+    this.setState({query : query});
+    
+    searchYouTube({
+      query: query,
+      max: 8,
+      key: window.YOUTUBE_API_KEY,
+      videoEmbeddable: 'true',
+      part: 'snippet',
+      type: 'video'
+    }, (data) => {
+      this.setState({videos: data.items, video: data.items[0]});
+    });
+  }
+    
   handleVideoClick(video) {
-
     this.setState({video: video });
   }
   
   render() {
     return (
       <div>
-        <Nav />
+        <Nav clickHandler={this.handleSearchClick.bind(this)}/>
         <div className="col-md-7">
           <VideoPlayer video={this.state.video}/>
         </div>
         <div className="col-md-5">
-          <VideoList videos={window.exampleVideoData} clickHandler={this.handleVideoClick.bind(this)}/>
+          <VideoList videos={this.state.videos} clickHandler={this.handleVideoClick.bind(this)}/>
         </div>
       </div>
     );
